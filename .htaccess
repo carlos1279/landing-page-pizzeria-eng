@@ -1,0 +1,103 @@
+# ============================================================
+# SECURITY HEADERS - Apache Configuration
+# ============================================================
+
+# Enable mod_rewrite
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  
+  # Remove www prefix
+  RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+  RewriteRule ^(.*)$ https://%1%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ============================================================
+# SECURITY HEADERS
+# ============================================================
+
+<IfModule mod_headers.c>
+  # Content Security Policy - Protegge da XSS e injection attacks
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+  
+  # Protegge da Clickjacking
+  Header set X-Frame-Options "DENY"
+  
+  # Protegge da MIME type sniffing
+  Header set X-Content-Type-Options "nosniff"
+  
+  # Protegge da XSS nel browser
+  Header set X-XSS-Protection "1; mode=block"
+  
+  # Referrer Policy - Controlla quali informazioni vengono inviate
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # Permissions Policy - Limita accesso a browser features
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+  
+  # HSTS - Forza HTTPS per 1 anno
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  
+  # Disable caching for HTML files (force refresh)
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+  </FilesMatch>
+  
+  # Cache static assets for 1 year
+  <FilesMatch "\.(jpg|jpeg|png|gif|ico|css|js|woff|woff2|ttf|svg)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+</IfModule>
+
+# ============================================================
+# COMPRESSION
+# ============================================================
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+</IfModule>
+
+# ============================================================
+# DISABLE DIRECTORY LISTING
+# ============================================================
+
+Options -Indexes
+
+# ============================================================
+# BLOCK COMMON ATTACK PATTERNS
+# ============================================================
+
+<IfModule mod_rewrite.c>
+  # Block SQL injection attempts
+  RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(>|%3E) [NC,OR]
+  RewriteCond %{QUERY_STRING} UNION.*SELECT [NC,OR]
+  RewriteCond %{QUERY_STRING} INSERT.*INTO [NC,OR]
+  RewriteCond %{QUERY_STRING} DELETE.*FROM [NC,OR]
+  RewriteCond %{QUERY_STRING} DROP.*TABLE [NC,OR]
+  RewriteCond %{QUERY_STRING} UPDATE.*SET [NC,OR]
+  RewriteCond %{QUERY_STRING} exec\( [NC,OR]
+  RewriteCond %{QUERY_STRING} eval\( [NC,OR]
+  RewriteCond %{QUERY_STRING} base64 [NC]
+  RewriteRule ^(.*)$ - [F,L]
+  
+  # Block access to sensitive files
+  RewriteRule ^\.git - [F,L]
+  RewriteRule ^\.env - [F,L]
+  RewriteRule ^\.htaccess - [F,L]
+  RewriteRule ^wp-admin - [F,L]
+  RewriteRule ^wp-login\.php - [F,L]
+</IfModule>
+
+# ============================================================
+# BLOCK MALICIOUS USER AGENTS
+# ============================================================
+
+<IfModule mod_setenvif.c>
+  SetEnvIfNoCase User-Agent "bot|crawler|spider|scraper" bad_bot
+  <RequireAll>
+    Require not env bad_bot
+  </RequireAll>
+</IfModule>

@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       MODIFICA QUI: Titolo della pagina e meta description SEO
+       ============================================================ -->
+  <title>La Vera Pizzeria – Authentic Neapolitan Pizza in Milan</title>
+  <meta name="description" content="Authentic pizzeria in Milan. Homemade Neapolitan pizza, wood-fired oven, fresh ingredients. Book your table or order delivery!" />
+
+  <!-- ============================================================
+       SECURITY HEADERS
+       ============================================================ -->
+  <!-- Content Security Policy: Protegge da XSS e injection attacks -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';" />
+  
+  <!-- Protegge da Clickjacking -->
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  
+  <!-- Referrer Policy: Controlla quali informazioni vengono inviate -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  <!-- Permissions Policy: Limita accesso a browser features -->
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Google Fonts: Poppins + Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <script>
+    /* ============================================================
+       Tailwind Config – Palette colori personalizzata per Pizzeria
+       ============================================================ */
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Poppins', 'sans-serif'],
+            display: ['Playfair Display', 'serif'],
+          },
+          colors: {
+            brand: {
+              red:     '#D32F2F',   /* Rosso Pomodoro vivace */
+              darkred: '#B71C1C',   /* Rosso scuro */
+              green:   '#2E7D32',   /* Verde Basilico */
+              cream:   '#FFF8F0',   /* Crema/Carta Paglia */
+              gold:    '#D4AF37',   /* Oro accento */
+              dark:    '#1A1410',   /* Marrone scuro */
+              gray:    '#F5F1ED',   /* Grigio caldo */
+            }
+          },
+          backgroundImage: {
+            'hero-gradient': 'linear-gradient(135deg, rgba(26,20,16,0.92) 0%, rgba(211,47,47,0.45) 50%, rgba(26,20,16,0.92) 100%)',
+          },
+          animation: {
+            'fade-in-up':     'fadeInUp 0.7s ease-out both',
+            'fade-in':        'fadeIn 0.6s ease-out both',
+            'pulse-slow':     'pulse 3s cubic-bezier(0.4,0,0.6,1) infinite',
+            'bounce-slow':    'bounce 2s infinite',
+            'float':          'float 3s ease-in-out infinite',
+            'wiggle':         'wiggle 0.5s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%':   { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%':   { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%':      { transform: 'translateY(-20px)' },
+            },
+            wiggle: {
+              '0%, 100%': { transform: 'rotate(0deg)' },
+              '25%':      { transform: 'rotate(3deg)' },
+              '75%':      { transform: 'rotate(-3deg)' },
+            },
+          },
+          boxShadow: {
+            'card':     '0 4px 24px rgba(26,20,16,0.12)',
+            'card-lg':  '0 8px 40px rgba(26,20,16,0.18)',
+            'cta':      '0 4px 20px rgba(211,47,47,0.40)',
+            'cta-lg':   '0 8px 32px rgba(211,47,47,0.55)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ============================================================
+       Stili globali e micro-animazioni
+       ============================================================ */
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #FFF8F0;
+      color: #1A1410;
+    }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+    /* Navbar scroll shadow */
+    #navbar.scrolled {
+      box-shadow: 0 4px 30px rgba(26,20,16,0.25);
+    }
+
+    /* Animazione ritardata per gli elementi hero */
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+
+    /* Hover card con lift */
+    .card-lift {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(211,47,47,0.20);
+    }
+
+    /* Gradiente testo rosso-oro */
+    .text-gradient {
+      background: linear-gradient(90deg, #D32F2F 0%, #D4AF37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Linea decorativa titoli */
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #D32F2F, #D4AF37);
+      border-radius: 2px;
+      margin: 16px auto 0;
+    }
+
+    /* Pulsante WhatsApp flottante */
+    #whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      animation: pulse-green 2s infinite;
+    }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      50%       { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+    }
+
+    /* Input focus */
+    .form-input:focus {
+      outline: none;
+      border-color: #D32F2F;
+      box-shadow: 0 0 0 3px rgba(211,47,47,0.15);
+    }
+
+    /* Stelle recensioni */
+    .star-filled { color: #D4AF37; }
+
+    /* Ribbon "Specialità" */
+    .ribbon {
+      position: absolute;
+      top: 14px;
+      right: -8px;
+      background: linear-gradient(90deg, #D32F2F, #B71C1C);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 3px 14px 3px 10px;
+      border-radius: 2px 0 0 2px;
+      text-transform: uppercase;
+    }
+    .ribbon::after {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: 0;
+      border-width: 12px 8px 12px 0;
+      border-style: solid;
+      border-color: transparent;
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero overlay pattern */
+    .hero-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Numero statistiche */
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1;
+      color: #D32F2F;
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(211,47,47,0.12);
+      border: 1px solid rgba(211,47,47,0.3);
+      color: #D32F2F;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Pizza card icon glow */
+    .pizza-icon-wrap {
+      transition: transform 0.3s ease;
+    }
+    .card-lift:hover .pizza-icon-wrap {
+      transform: scale(1.15) rotate(8deg);
+    }
+
+    /* Ingredienti floating */
+    .ingredient-float {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* Menu item hover */
+    .menu-item {
+      transition: all 0.3s ease;
+    }
+    .menu-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 24px rgba(211,47,47,0.15);
+    }
+
+    /* Video Background Styles */
+    .video-bg-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .video-bg-container video {
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(26,20,16,0.85) 0%, rgba(211,47,47,0.3) 50%, rgba(26,20,16,0.85) 100%);
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <!-- ============================================================
+       WHATSAPP FLOATING BUTTON
+       MODIFICA: Sostituisci +39XXXXXXXXXX con il tuo numero WhatsApp
+       ============================================================ -->
+  <a id="whatsapp-float"
+     href="https://wa.me/39XXXXXXXXXX?text=Ciao!%20Vorrei%20ordinare%20una%20pizza."
+     target="_blank"
+     rel="noopener"
+     aria-label="Ordina su WhatsApp"
+     class="flex items-center justify-center w-16 h-16 rounded-full shadow-2xl"
+     style="background: linear-gradient(135deg, #25D366, #128C7E);">
+    <i class="fab fa-whatsapp text-white text-3xl"></i>
+  </a>
+
+  <!-- ============================================================
+       HEADER / NAVBAR (Sticky)
+       ============================================================ -->
+  <header id="navbar"
+          class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+          style="background: rgba(26,20,16,0.98); backdrop-filter: blur(12px);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18 py-3">
+
+        <!-- LOGO -->
+        <!-- MODIFICA: Cambia "[NOME PIZZERIA]" con il nome della tua pizzeria -->
+        <a href="#home" class="flex items-center gap-3 group">
+          <div class="flex items-center justify-center w-10 h-10 rounded-lg"
+               style="background: linear-gradient(135deg, #D32F2F, #B71C1C);">
+            <i class="fas fa-pizza-slice text-white text-lg"></i>
+          </div>
+          <div class="flex flex-col leading-tight">
+            <span class="text-white font-black text-xl tracking-tight">La Vera<span class="text-brand-red">Pizza</span></span>
+            <span class="text-brand-gold text-[10px] font-bold uppercase tracking-[0.2em]">Artisanal</span>
+          </div>
+        </a>
+
+        <!-- DESKTOP MENU -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="text-white/80 hover:text-brand-red font-medium text-sm transition-colors">Home</a>
+          <a href="#perche-noi" class="text-white/80 hover:text-brand-red font-medium text-sm transition-colors">Quality</a>
+          <a href="#menu" class="text-white/80 hover:text-brand-red font-medium text-sm transition-colors">Menu</a>
+          <a href="#recensioni" class="text-white/80 hover:text-brand-red font-medium text-sm transition-colors">What They Say</a>
+          <a href="#contatti" class="text-white/80 hover:text-brand-red font-medium text-sm transition-colors">Contact</a>
+        </nav>
+
+        <!-- CTA BUTTON -->
+        <!-- MODIFICA: Sostituisci +39XXXXXXXXXX con il tuo numero di telefono -->
+        <div class="hidden md:block">
+          <a href="tel:+39XXXXXXXXXX"
+             class="inline-flex items-center gap-2 bg-brand-red hover:bg-brand-darkred text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-cta hover:shadow-cta-lg">
+            <i class="fas fa-phone-alt"></i>
+            Call Now
+          </a>
+        </div>
+
+        <!-- MOBILE MENU BUTTON -->
+        <div class="md:hidden flex items-center">
+          <button id="mobile-menu-button" class="text-white focus:outline-none p-2">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE MENU (Hidden by default) -->
+    <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-white/10">
+      <div class="px-4 pt-2 pb-6 space-y-1">
+        <a href="#home" class="block px-3 py-4 text-white font-medium border-b border-white/5">Home</a>
+        <a href="#perche-noi" class="block px-3 py-4 text-white font-medium border-b border-white/5">Quality</a>
+        <a href="#menu" class="block px-3 py-4 text-white font-medium border-b border-white/5">Menu</a>
+        <a href="#recensioni" class="block px-3 py-4 text-white font-medium border-b border-white/5">What They Say</a>
+        <a href="#contatti" class="block px-3 py-4 text-white font-medium">Contact</a>
+        <div class="mt-4 px-3">
+          <a href="tel:+39XXXXXXXXXX" class="flex items-center justify-center gap-2 bg-brand-red text-white w-full py-4 rounded-xl font-bold">
+            <i class="fas fa-phone-alt"></i>
+            Call Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO SECTION WITH VIDEO BACKGROUND
+       ============================================================ -->
+  <section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <!-- Video Background -->
+    <div class="video-bg-container">
+      <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?q=80&w=2070" loading="lazy" preload="metadata">
+        <source src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663472152618/JHMxQbvCRZOJhYSN.mp4" type="video/mp4">
+      </video>
+      <div class="video-overlay"></div>
+      <div class="absolute inset-0 hero-pattern z-[2]"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="max-w-3xl mx-auto text-center animate-fade-in-up">
+        <div class="badge mb-6 bg-white/10 border-white/20 text-white backdrop-blur-md">
+          <i class="fas fa-fire text-brand-red"></i>
+          Traditional wood-fired oven
+        </div>
+        <!-- MODIFICA: Cambia "[TUA CITTÀ]" con la tua città -->
+        <h1 class="text-5xl md:text-8xl font-black text-white leading-[1.1] mb-8">
+          Authentic <br/>
+          <span class="text-brand-red">Neapolitan Pizza</span> <br/>
+          a <span class="text-brand-gold">Milan</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-white/90 mb-12 font-light leading-relaxed">
+          Fresh ingredients, long fermentation dough and the passion of those who love tradition. Discover the true taste of Naples.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <a href="#menu" class="w-full sm:w-auto bg-brand-red hover:bg-brand-darkred text-white px-12 py-5 rounded-full font-bold text-xl transition-all shadow-cta hover:shadow-cta-lg flex items-center justify-center gap-3">
+            <i class="fas fa-utensils"></i>
+            Discover Menu
+          </a>
+          <a href="#contatti" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/30 px-12 py-5 rounded-full font-bold text-xl transition-all backdrop-blur-md flex items-center justify-center gap-3">
+            <i class="fas fa-calendar-check"></i>
+            Book Table
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="mt-20 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+          <div class="text-center">
+            <div class="text-brand-gold font-black text-4xl mb-1">30'</div>
+            <div class="text-white/70 text-xs uppercase tracking-widest font-bold">Delivery</div>
+          </div>
+          <div class="text-center border-x border-white/20">
+            <div class="text-brand-gold font-black text-4xl mb-1">72h</div>
+            <div class="text-white/70 text-xs uppercase tracking-widest font-bold">Fermentation</div>
+          </div>
+          <div class="text-center">
+            <div class="text-brand-gold font-black text-4xl mb-1">100%</div>
+            <div class="text-white/70 text-xs uppercase tracking-widest font-bold">Organic</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Down Indicator -->
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce-slow">
+      <a href="#perche-noi" class="text-white/40 hover:text-white transition-colors">
+        <i class="fas fa-chevron-down text-2xl"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PERCHÉ SCEGLIERE NOI (Quality)
+       ============================================================ -->
+  <section id="perche-noi" class="py-24 bg-brand-cream relative overflow-hidden">
+    <!-- Decorative Ingredients -->
+    <img src="https://cdn-icons-png.flaticon.com/512/1135/1135555.png" class="absolute top-20 left-10 w-16 opacity-10 ingredient-float" alt="basilico" />
+    <img src="https://cdn-icons-png.flaticon.com/512/1135/1135560.png" class="absolute bottom-20 right-10 w-20 opacity-10 ingredient-float" style="animation-delay: 1s" alt="pomodoro" />
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20 reveal">
+        <h2 class="text-4xl md:text-5xl font-black text-brand-dark mb-4 section-title">The Secret of Our Pizza</h2>
+        <p class="text-brand-green font-bold uppercase tracking-[0.2em] text-sm">Quality senza compromessi</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-10">
+        <!-- Card 1 -->
+        <div class="bg-white p-10 rounded-[32px] shadow-card card-lift text-center reveal delay-100">
+          <div class="pizza-icon-wrap w-20 h-20 bg-brand-red/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+            <i class="fas fa-leaf text-brand-red text-4xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Ingredienti DOC</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Utilizziamo solo Pomodoro San Marzano DOP, Mozzarella di Bufala Campana e Olio EVO delle migliori colline italiane.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white p-10 rounded-[32px] shadow-card card-lift text-center reveal delay-200">
+          <div class="pizza-icon-wrap w-20 h-20 bg-brand-green/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+            <i class="fas fa-clock text-brand-green text-4xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Lunga Fermentation</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Il nostro impasto riposa per almeno 72 ore. Il risultato? Una pizza leggera, digeribile e incredibilmente fragrante.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white p-10 rounded-[32px] shadow-card card-lift text-center reveal delay-300">
+          <div class="pizza-icon-wrap w-20 h-20 bg-brand-gold/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+            <i class="fas fa-fire-alt text-brand-gold text-4xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4">Forno a Legna</h3>
+          <p class="text-gray-600 leading-relaxed">
+            La cottura avviene rigorosamente in forno a legna a 450°C, per garantire quel cornicione alveolato e il sapore unico di una volta.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       I NOSTRI SERVIZI / MENU (Griglia)
+       ============================================================ -->
+  <section id="menu" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20 reveal">
+        <h2 class="text-4xl md:text-5xl font-black text-brand-dark mb-4 section-title">Our Specialties</h2>
+        <p class="text-brand-red font-bold uppercase tracking-[0.2em] text-sm">From tradition to creativity</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Pizza 1 -->
+        <div class="menu-item group relative bg-brand-gray rounded-[40px] overflow-hidden reveal delay-100">
+          <div class="h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1574071318508-1cdbad80ad38?q=80&w=2070" alt="Margherita" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-2xl font-bold">Margherita DOP</h3>
+              <span class="text-brand-red font-black text-xl">€8.50</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-6">San Marzano tomato, Buffalo mozzarella, fresh basil, extra virgin olive oil.</p>
+            <button class="w-full py-3 rounded-2xl border-2 border-brand-red text-brand-red font-bold hover:bg-brand-red hover:text-white transition-all">Order Now</button>
+          </div>
+          <div class="ribbon">Classic</div>
+        </div>
+
+        <!-- Pizza 2 -->
+        <div class="menu-item group relative bg-brand-gray rounded-[40px] overflow-hidden reveal delay-200">
+          <div class="h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?q=80&w=2076" alt="Diavola" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-2xl font-bold">Spicy Devil</h3>
+              <span class="text-brand-red font-black text-xl">€9.50</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-6">Tomato, mozzarella, spicy Calabrian salami, chili pepper, olives.</p>
+            <button class="w-full py-3 rounded-2xl border-2 border-brand-red text-brand-red font-bold hover:bg-brand-red hover:text-white transition-all">Order Now</button>
+          </div>
+          <div class="ribbon">Spicy</div>
+        </div>
+
+        <!-- Pizza 3 -->
+        <div class="menu-item group relative bg-brand-gray rounded-[40px] overflow-hidden reveal delay-300">
+          <div class="h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070" alt="Quattro Formaggi" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-2xl font-bold">4 Cheeses</h3>
+              <span class="text-brand-red font-black text-xl">€10.50</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-6">Mozzarella, Gorgonzola DOP, 24-month Parmigiano Reggiano, Pecorino.</p>
+            <button class="w-full py-3 rounded-2xl border-2 border-brand-red text-brand-red font-bold hover:bg-brand-red hover:text-white transition-all">Order Now</button>
+          </div>
+        </div>
+
+        <!-- Pizza 4 -->
+        <div class="menu-item group relative bg-brand-gray rounded-[40px] overflow-hidden reveal delay-100">
+          <div class="h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1593504049359-74330189a345?q=80&w=1854" alt="Vegetariana" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-2xl font-bold">Vegetarian</h3>
+              <span class="text-brand-red font-black text-xl">€9.00</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-6">Mozzarella, zucchini, grilled eggplant and peppers, cherry tomatoes.</p>
+            <button class="w-full py-3 rounded-2xl border-2 border-brand-red text-brand-red font-bold hover:bg-brand-red hover:text-white transition-all">Order Now</button>
+          </div>
+          <div class="ribbon">Veggie</div>
+        </div>
+
+        <!-- Pizza 5 -->
+        <div class="menu-item group relative bg-brand-gray rounded-[40px] overflow-hidden reveal delay-200">
+          <div class="h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981" alt="Capricciosa" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-2xl font-bold">Capricciosa</h3>
+              <span class="text-brand-red font-black text-xl">€11.00</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-6">Tomato, mozzarella, cooked ham, mushrooms, artichoke hearts, olives.</p>
+            <button class="w-full py-3 rounded-2xl border-2 border-brand-red text-brand-red font-bold hover:bg-brand-red hover:text-white transition-all">Order Now</button>
+          </div>
+        </div>
+
+        <!-- Pizza 6 -->
+        <div class="menu-item group relative bg-brand-gray rounded-[40px] overflow-hidden reveal delay-300">
+          <div class="h-64 overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?q=80&w=1928" alt="Calzone" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          </div>
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-2xl font-bold">Royal Calzone</h3>
+              <span class="text-brand-red font-black text-xl">€10.00</span>
+            </div>
+            <p class="text-gray-500 text-sm mb-6">Filled with ricotta, mozzarella, salami, tomato and pepper.</p>
+            <button class="w-full py-3 rounded-2xl border-2 border-brand-red text-brand-red font-bold hover:bg-brand-red hover:text-white transition-all">Order Now</button>
+          </div>
+          <div class="ribbon">Special</div>
+        </div>
+      </div>
+
+      <div class="mt-20 text-center reveal">
+        <a href="#" class="inline-flex items-center gap-3 text-brand-red font-black text-xl hover:gap-5 transition-all">
+          See Full Menu
+          <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BANNER URGENZA / DELIVERY
+       ============================================================ -->
+  <section class="py-16 bg-brand-red relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 hero-pattern"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="text-center md:text-left">
+          <h2 class="text-3xl md:text-4xl font-black text-white mb-2">Want pizza at home?</h2>
+          <p class="text-white/80 text-lg">We deliver throughout the city in less than 30 minutes!</p>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="tel:+39XXXXXXXXXX" class="bg-white text-brand-red px-8 py-4 rounded-full font-black text-lg shadow-xl hover:scale-105 transition-transform flex items-center gap-3">
+            <i class="fas fa-motorcycle animate-wiggle"></i>
+            Order Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RECENSIONI (Riprova Sociale)
+       ============================================================ -->
+  <section id="recensioni" class="py-24 bg-brand-cream">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-20 reveal">
+        <h2 class="text-4xl md:text-5xl font-black text-brand-dark mb-4 section-title">What Our Customers Say</h2>
+        <div class="flex items-center justify-center gap-2 mb-4">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png" alt="Google" class="w-5 h-5" />
+          <span class="font-bold text-sm">4.9/5 on Google Reviews</span>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Recensione 1 -->
+        <div class="bg-white p-8 rounded-[32px] shadow-card reveal delay-100">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 bg-brand-red rounded-full flex items-center justify-center text-white font-bold">MC</div>
+            <div>
+              <h4 class="font-bold">Marco Cassani</h4>
+              <div class="flex text-xs star-filled">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-600 italic leading-relaxed">
+            "La miglior pizza napoletana di Milan! Il cornicione è altissimo e soffice, proprio come a Napoli. Servizio veloce e personale gentilissimo."
+          </p>
+        </div>
+
+        <!-- Recensione 2 -->
+        <div class="bg-white p-8 rounded-[32px] shadow-card reveal delay-200">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center text-white font-bold">EF</div>
+            <div>
+              <h4 class="font-bold">Elena Ferrari</h4>
+              <div class="flex text-xs star-filled">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-600 italic leading-relaxed">
+            "I ordered delivery and the pizza arrived very hot and early. The quality of the ingredients is excellent. Highly recommended!"
+          </p>
+        </div>
+
+        <!-- Recensione 3 -->
+        <div class="bg-white p-8 rounded-[32px] shadow-card reveal delay-300">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-12 h-12 bg-brand-gold rounded-full flex items-center justify-center text-white font-bold">LB</div>
+            <div>
+              <h4 class="font-bold">Luca Bianchi</h4>
+              <div class="flex text-xs star-filled">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-600 italic leading-relaxed">
+            "Welcoming place and amazing pizza. The 72-hour fermentation really makes a difference, you don't feel heavy at all. I will definitely come back."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT US (Contact)
+       ============================================================ -->
+  <section id="contatti" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        
+        <!-- Info Contact -->
+        <div class="reveal">
+          <h2 class="text-4xl md:text-5xl font-black text-brand-dark mb-8">Visit Us or Book</h2>
+          <p class="text-gray-600 text-lg mb-10">
+            Siamo nel cuore di Milan, pronti a farti assaggiare la vera tradizione. Per gruppi numerosi o eventi privati, contattaci direttamente.
+          </p>
+
+          <div class="space-y-8">
+            <div class="flex items-start gap-6">
+              <div class="w-12 h-12 bg-brand-red/10 rounded-xl flex items-center justify-center shrink-0">
+                <i class="fas fa-map-marker-alt text-brand-red text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg">Address</h4>
+                <!-- MODIFICA: Inserisci il tuo indirizzo -->
+                <p class="text-gray-500">Via Roma 123, 20100 Milan (MI)</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-6">
+              <div class="w-12 h-12 bg-brand-green/10 rounded-xl flex items-center justify-center shrink-0">
+                <i class="fas fa-phone-alt text-brand-green text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg">Phone</h4>
+                <!-- MODIFICA: Inserisci il tuo numero -->
+                <p class="text-gray-500">+39 XXX XXX XXXX</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-6">
+              <div class="w-12 h-12 bg-brand-gold/10 rounded-xl flex items-center justify-center shrink-0">
+                <i class="fas fa-clock text-brand-gold text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg">Opening Hours</h4>
+                <div class="text-gray-500 grid grid-cols-2 gap-x-4">
+                  <span>Mon - Fri:</span> <span>12:00 - 15:00 / 19:00 - 23:30</span>
+                  <span>Sat - Sun:</span> <span>12:00 - 00:00 (Continuous Hours)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-12">
+            <a href="https://wa.me/39XXXXXXXXXX" class="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-4 rounded-2xl font-black text-lg transition-all shadow-lg">
+              <i class="fab fa-whatsapp text-2xl"></i>
+              Book on WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- Form Contact -->
+        <div class="bg-brand-gray p-10 rounded-[40px] shadow-card reveal delay-200">
+          <h3 class="text-2xl font-bold mb-8">Send us a Message</h3>
+          <form id="contact-form" class="space-y-5">
+            <div class="grid md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-bold mb-2 ml-1">Name</label>
+                <input type="text" required placeholder="Il tuo nome" class="form-input w-full bg-white border-none px-6 py-4 rounded-2xl shadow-sm" />
+              </div>
+              <div>
+                <label class="block text-sm font-bold mb-2 ml-1">Phone</label>
+                <input type="tel" required placeholder="Il tuo numero" class="form-input w-full bg-white border-none px-6 py-4 rounded-2xl shadow-sm" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-2 ml-1">Email</label>
+              <input type="email" required placeholder="La tua email" class="form-input w-full bg-white border-none px-6 py-4 rounded-2xl shadow-sm" />
+            </div>
+            <div>
+              <label class="block text-sm font-bold mb-2 ml-1">Message / Prenotazione</label>
+              <textarea rows="4" required placeholder="Quante persone? A che ora?" class="form-input w-full bg-white border-none px-6 py-4 rounded-2xl shadow-sm"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-brand-dark hover:bg-black text-white py-5 rounded-2xl font-black text-lg transition-all shadow-lg">
+              Send Richiesta
+            </button>
+          </form>
+          <div id="form-success" class="hidden mt-6 p-4 bg-brand-green/10 border border-brand-green/20 text-brand-green rounded-2xl text-center font-bold">
+            Richiesta inviata! Ti risponderemo a breve. 🍕
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="bg-brand-dark text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+        
+        <!-- Brand -->
+        <div class="col-span-1 md:col-span-2">
+          <a href="#" class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 bg-brand-red rounded-lg flex items-center justify-center">
+              <i class="fas fa-pizza-slice text-white"></i>
+            </div>
+            <span class="font-black text-2xl tracking-tight">La Vera<span class="text-brand-red">Pizza</span></span>
+          </a>
+          <p class="text-white/50 max-w-sm leading-relaxed">
+            Portiamo l'arte della pizza napoletana nel cuore della tua città. Passione, tradizione e ingredienti di prima scelta.
+          </p>
+          <div class="flex gap-4 mt-8">
+            <a href="#" class="w-10 h-10 bg-white/5 hover:bg-brand-red rounded-full flex items-center justify-center transition-all"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="w-10 h-10 bg-white/5 hover:bg-brand-red rounded-full flex items-center justify-center transition-all"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="w-10 h-10 bg-white/5 hover:bg-brand-red rounded-full flex items-center justify-center transition-all"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div>
+          <h4 class="font-bold text-lg mb-6">Navigation</h4>
+          <ul class="space-y-4 text-white/60">
+            <li><a href="#home" class="hover:text-brand-red transition-colors">Home</a></li>
+            <li><a href="#perche-noi" class="hover:text-brand-red transition-colors">Quality</a></li>
+            <li><a href="#menu" class="hover:text-brand-red transition-colors">Menu</a></li>
+            <li><a href="#contatti" class="hover:text-brand-red transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <h4 class="font-bold text-lg mb-6">Legal Notes</h4>
+          <ul class="space-y-4 text-white/60">
+            <li><a href="#" class="hover:text-brand-red transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-brand-red transition-colors">Cookie Policy</a></li>
+            <li><a href="#" class="hover:text-brand-red transition-colors">Terms and Conditions</a></li>
+            <!-- MODIFICA: Inserisci la tua P.IVA -->
+            <li>VAT: 00000000000</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-white/10 text-center text-white/40 text-sm">
+        <p>&copy; 2026 La Vera Pizzeria. All rights reserved. Made with passion.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <script>
+    // 1. Navbar Scroll Effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled', 'py-1');
+        nav.classList.remove('py-3');
+      } else {
+        nav.classList.remove('scrolled', 'py-1');
+        nav.classList.add('py-3');
+      }
+    });
+
+    // 2. Mobile Menu Toggle
+    const menuBtn = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      const icon = menuBtn.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+
+    // 3. Scroll Reveal Animation
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealOnScroll = () => {
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // 4. Contact Form Success Simulation
+    const form = document.getElementById('contact-form');
+    const successMsg = document.getElementById('form-success');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      form.classList.add('opacity-50', 'pointer-events-none');
+      setTimeout(() => {
+        form.reset();
+        form.classList.add('hidden');
+        successMsg.classList.remove('hidden');
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
+
+    // ============================================================
+    // SECURITY PROTECTIONS
+    // ============================================================
+    
+    // 5. XSS Protection: Sanitize user input
+    function sanitizeInput(input) {
+      const div = document.createElement('div');
+      div.textContent = input;
+      return div.innerHTML;
+    }
+
+    // 6. Form Input Validation & Sanitization
+    const formInputs = document.querySelectorAll('.form-input');
+    formInputs.forEach(input => {
+      input.addEventListener('blur', function() {
+        this.value = sanitizeInput(this.value);
+      });
+      input.addEventListener('keypress', function(e) {
+        if (e.key === '<' || e.key === '>' || e.key === '{' || e.key === '}') {
+          e.preventDefault();
+        }
+      });
+    });
+
+    // 7. Rate Limiting for Form Submissions
+    let lastSubmitTime = 0;
+    const SUBMIT_COOLDOWN = 3000;
+    form.addEventListener('submit', function(e) {
+      const now = Date.now();
+      if (now - lastSubmitTime < SUBMIT_COOLDOWN) {
+        e.preventDefault();
+        console.warn('Form submission rate limited');
+        return false;
+      }
+      lastSubmitTime = now;
+    });
+
+    // 8. Prevent Clickjacking via Frame Detection
+    if (window.self !== window.top) {
+      window.top.location = window.self.location;
+    }
+
+    // 9. Monitor for Suspicious Activity
+    window.addEventListener('error', function(e) {
+      console.error('Error detected:', e.type);
+    });
+
+    // 10. CORS Protection: Validate API calls
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+      const url = args[0];
+      if (typeof url === 'string' && !url.startsWith('http://localhost') && !url.startsWith(window.location.origin)) {
+        if (!url.startsWith('https://')) {
+          console.warn('Insecure fetch blocked:', url);
+          return Promise.reject(new Error('Insecure request blocked'));
+        }
+      }
+      return originalFetch.apply(this, args);
+    };
+
+    // 11. Disable eval() for security
+    window.eval = function() {
+      throw new Error('eval() is disabled for security reasons');
+    };
+
+    console.log('🔒 Security protections activated');
+
+  </script>
+
+</body>
+</html>
