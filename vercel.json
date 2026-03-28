@@ -1,4 +1,7 @@
 {
+  "buildCommand": "echo 'Static site - no build needed'",
+  "outputDirectory": ".",
+  "public": true,
   "headers": [
     {
       "source": "/(.*)",
@@ -24,12 +27,8 @@
           "value": "strict-origin-when-cross-origin"
         },
         {
-          "key": "Permissions-Policy",
-          "value": "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
-        },
-        {
           "key": "Strict-Transport-Security",
-          "value": "max-age=31536000; includeSubDomains; preload"
+          "value": "max-age=31536000; includeSubDomains"
         }
       ]
     },
@@ -38,16 +37,16 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate, max-age=0"
+          "value": "public, max-age=3600, must-revalidate"
         }
       ]
     },
     {
-      "source": "/.*\\.(jpg|jpeg|png|gif|ico|css|js|woff|woff2|ttf|svg)$",
+      "source": "/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "max-age=31536000, public"
+          "value": "public, max-age=86400, immutable"
         }
       ]
     }
@@ -57,7 +56,5 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ],
-  "buildCommand": "echo 'Static site - no build needed'",
-  "outputDirectory": "."
+  ]
 }
